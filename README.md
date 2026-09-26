@@ -1,11 +1,11 @@
 # Table of Contents
-[Introduction](#1)
-[Setting up PFSense Gateway VM](#2)
-[Setting up Ubuntu VM](#3)
-[Setting up Splunk on Ubuntu VM](#4)
-[Enabling shared clipboard](#5)
-[Universal receiver/indexer](#6)
-[Setting up Windows 10 workstation VM](#7)
+- [Introduction](#1)
+- [Setting up PFSense Gateway VM](#2)
+- [Setting up Ubuntu VM](#3)
+- [Setting up Splunk on Ubuntu VM](#4)
+  - [Enabling shared clipboard](#5)
+  - [Universal receiver/indexer](#6)
+- [Setting up Windows 10 workstation VM](#7)
 
 # Corporate network home laboratory (including SIEM) <a name="1"></a>
 
