@@ -6,6 +6,13 @@
   - [Enabling shared clipboard](#5)
   - [Universal receiver/indexer](#6)
 - [Setting up Windows 10 workstation VM](#7)
+- [Setting up Windows AD Domain Controller](#8)
+- [Universal forwarders on Windows VMs](#9)
+  - [Universal forwarders configuration files on Windows VMs](#10)
+  - [Installing Splunk Add-on for Windows for the indexer (Splunk on Ubuntu VM)](#11)
+  - [Installing Splunk Add-on for Windows for the universal forwarders (Windows VMs)](#12)
+- [Receiving and filtering logs on the indexer (Splunk Ubuntu VM)](#13)
+- [Setting up Linux Kali VM on my Thinkpad X230 laptop](#14)
 
 # Corporate network home laboratory (including SIEM) <a name="1"></a>
 
