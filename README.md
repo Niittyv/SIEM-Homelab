@@ -361,3 +361,6 @@ I installed VirtualBox on my laptop but forgot to run the installation file as a
 I downloaded Linux Kali prebuild VM from the Linux Kali official website. I added the prebuild machine to VirtualBox and connected the VM to bridged network using AMD PCnet-FAST III (Am79C973) virtual network adapter. I left the VM settings as default. This means that the VM is allocated with 2048MB of RAM, 2 CPU cores and 80gb of dynamic disc space.
 
 I boot up the VM and the operating system is ready to go. No installation is required.
+
+<img width="1232" height="767" alt="image" src="https://github.com/user-attachments/assets/5947ce45-a3d7-47aa-ac2e-166a64cfb982" />
+
