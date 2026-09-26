@@ -1,7 +1,10 @@
-Table of contents:
-
 # Table of Contents
-1. [Corporate network home laboratory (including SIEM)](#example)
+1. [Corporate network home laboratory (including SIEM)](#Introduction)
+2. [Setting up PFSense Gateway VM](##Setting up PFSense Gateway VM)
+3. [Setting up Ubuntu VM](##Setting up Ubuntu VM)
+4. [Setting up Splunk on Ubuntu VM](###Setting up Splunk on Ubuntu VM)
+5. [Enabling shared clipboard](####Enabling shared clipboard)
+6. [Universal receiver/indexer](### Universal receiver/indexer)
 
 # Corporate network home laboratory (including SIEM)
 
