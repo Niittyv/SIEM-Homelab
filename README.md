@@ -362,5 +362,8 @@ I downloaded Linux Kali prebuild VM from the Linux Kali official website. I adde
 
 I boot up the VM and the operating system is ready to go. No installation is required.
 
-<img width="1232" height="767" alt="image" src="https://github.com/user-attachments/assets/5947ce45-a3d7-47aa-ac2e-166a64cfb982" />
+<img width="1365" height="727" alt="image" src="https://github.com/user-attachments/assets/d8f13c4f-932c-459c-bc15-434b2ac53fa1" />
+
+I installed Scapy so that I can practise some ARP spoofing attacks.
+
 
