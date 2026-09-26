@@ -1,12 +1,12 @@
 # Table of Contents
-1. [Corporate network home laboratory (including SIEM)](#Introduction)
-2. [Setting up PFSense Gateway VM](##Setting up PFSense Gateway VM)
-3. [Setting up Ubuntu VM](##Setting up Ubuntu VM)
-4. [Setting up Splunk on Ubuntu VM](###Setting up Splunk on Ubuntu VM)
-5. [Enabling shared clipboard](####Enabling shared clipboard)
-6. [Universal receiver/indexer](### Universal receiver/indexer)
+1. [Introduction)](#1)
+2. [Setting up PFSense Gateway VM](#2)
+3. [Setting up Ubuntu VM](#3)
+4. [Setting up Splunk on Ubuntu VM](#4)
+5. [Enabling shared clipboard](#5)
+6. [Universal receiver/indexer](#6)
 
-# Corporate network home laboratory (including SIEM)
+# Corporate network home laboratory (including SIEM) <a name="1"></a>
 
 I've decided to build a VirtualBox internal network to simulate a corporate LAN environment. The VM devices inside the internal network can only communicate between each other and the PFSense gateway VM which acts as a firewall and a router allowing communication with external devices. Inside the internal network there is a Windows Workstation VM, an AD domain controller VM and an Ubuntu VM with Splunk installed to gather logs from the gateway and Windows devices. The devices inside the internal network can only communicate with each other through PFSense VM, which works as an internal network switch.
 
@@ -25,7 +25,7 @@ Windows Server 2022 VM (Active Directory Domain controller): 10.10.10.14
 Windows 10 VM (Windows workstation): 10.10.10.2
 
 
-## Setting up PFSense Gateway VM
+## Setting up PFSense Gateway VM <a name="2"></a>
 
 PFSense runs on FreeBSD which is a lightweight operating system, thus suitable for my use case. I chose PFSense as a virtual gateway device for its low resource requirements in terms of CPU and memory. I'll be running multiple virtual machines on the same host which makes it important to save resources wherever possible.
 
@@ -43,7 +43,7 @@ After the installation was complete I configured LAN-interface IP-addresses. I s
 
 I later configured the PFSense WAN-interface to use my personal computer's NIC connected to the internet. I only did this to later download some essential packages on Ubuntu VM from the internet. After downloading the packages I can configure the PFSense WAN-interface to use another NIC on my PC without internet connection and will connect to the Kali machine on the same LAN instead.
 
-## Setting up Ubuntu VM
+## Setting up Ubuntu VM <a name="3"></a>
 
 The idea of this machine is to simulate organization's IT-security team workstation. This machine will ingest logs from other hosts on the same internal network and analyze network packet traffic. 
 
@@ -98,7 +98,7 @@ While we're at it let's check the firewall rules for the LAN. There are three LA
 
 ![firewall](https://github.com/user-attachments/assets/a22ae55a-88f2-445b-93d7-cae70af7cb44)
 
-### Setting up Splunk on Ubuntu VM
+### Setting up Splunk on Ubuntu VM <a name="4"></a>
 
 First I need to register on splunk.com and activate free enterprise trial for 60 days. After my trial expires I can switch to Splunk free with limited features.
 
@@ -107,7 +107,7 @@ I run the following command to update all installation packages.
 sudo apt-get update && upgrade
 ```
 
-#### Enabling shared clipboard
+#### Enabling shared clipboard <a name="5"></a>
 
 I copied the .deb wget link from splunk.com to download and install splunk on my Linux VM. What annoys me currently though is that the clipboard between my Windows desktop and my Ubuntu VM are not shared so I can not copy & paste the wget link to my Ubuntu VM. First I have to enable the shared bidirectional clipboard on VirtualBox and then I need to install VirtualBox quest additions from an .ISO that is provided by VirtualBox. I execute the .run file and it says that the system is currently not set up to build kernel modules:
 
@@ -141,7 +141,7 @@ In server settings I want to enable SSL to make the HTTP secure.
 
 ![kuva](https://github.com/user-attachments/assets/ef46b975-a039-47c6-a004-cf44019e215c)
 
-### Universal receiver/indexer
+### Universal receiver/indexer <a name="6"></a>
 
 I need to configure universal receiver on my Splunk VM to collect logs from endpoints. First I want to make sure that port 9997 is not in use:
 
@@ -154,7 +154,7 @@ The command above returned nothing which means that port 9997 is available for l
 The Ubuntu ufw (uncomplicated firewall) is disabled by default, so I don't need to create a firewall rule to allow inbound traffic coming from Splunk application or TCP/UDP port 9997.
 
 
-## Setting up Windows 10 workstation VM
+## Setting up Windows 10 workstation VM <a name="7"></a>
 
 This device simulates a company employee's workstation. I downloaded a Windows 10 media creation tool from Microsoft's official web server. I use this tool to create an installation .ISO image. I built a Windows VM using the .ISO image on VirtualBox and allocated 2048MB of RAM, 1 CPU core and 50gb of dynamic disc space. I connected the VM to the internal network with and selected AMD PCnet-FAST III (Am79C973) as the network adapter. I booted the VM and started the Windows 10 Pro installation process.
 
@@ -182,7 +182,7 @@ Now the ICMP-packets are not dropped by the firewall:
 
 ![kuva](https://github.com/user-attachments/assets/4e757428-73bd-492f-b973-dca8c277aad0)
 
-## Setting up Windows AD Domain Controller
+## Setting up Windows AD Domain Controller <a name="8"></a>
 
 I downloaded Windows server 2022 trial ISO from Microsoft official web page. I created a new virtual machine with 2048MB RAM, 1 CPU core and 30GB disc space. I connected the VM to internal network with Intel PRO/1000 MT Desktop (82540EM) adapter just like with the Windows 10 machine. I started the VM with Windows server 2022 ISO mounted. I want to install Windows server with full graphical environment:
 
@@ -238,7 +238,7 @@ I'll login to the domain on my Windows 10 client:
 ![kuva](https://github.com/user-attachments/assets/6ab7cf03-0170-4db1-84f8-036b355e7589)
 ![kuva](https://github.com/user-attachments/assets/ced4764d-c8f0-4f68-9b34-46f6d1eebfa0)
 
-## Universal forwarders on Windows VMs
+## Universal forwarders on Windows VMs <a name="9"></a>
 
 I need to set up universal forwarders on Windows 10 and Windows server 2022 VMs to send system logs from Windows machines to Splunk on Ubuntu VM. I'll download the Splunk universal forwarder installer file from Splunk's website to my host PC and transfer the file to both Windows VMs. 
 
@@ -266,7 +266,7 @@ NOTE: you don't need to specify port if you're using default port 9997 for your 
 
 The installation is complete. With Windows firewall enabled, I would need to set an outbound rule to allow any outgoing traffic from Splunk application or TCP/UDP port of 9997. I have the Windows firewall disabled on both Windows machines so I don't need to worry about changing firewall rules for now. Later I will set up the Windows firewalls and I need to create outbound rules to allow outgoing traffic from universal forwarders.
 
-#### Universal forwarders configuration files on Windows VMs
+#### Universal forwarders configuration files on Windows VMs <a name="10"></a>
 
 The universal forwarder config files reside in C:\Program Files\SplunkUniversalForwarder\etc\apps\SplunkUniversalForwarder\local. There are two config files that I need to set up:
 1. inputs.conf. This configuration file will tell the universal forwarder where to gather the logs from. I plan to gather logs from Windows Event Log (winevtlog) located in C:\Windows\System32\winevt\Logs.
@@ -281,7 +281,7 @@ I've decided to download Splunk Add-on for Windows. I need to download the Add-o
 I inserted Splunk Add-on for Windows into the shared folder. I will now access the shared folder on my Ubuntu VM.
 
 
-#### Installing Splunk Add-on for Windows for the indexer (Splunk on Ubuntu VM)
+#### Installing Splunk Add-on for Windows for the indexer (Splunk on Ubuntu VM) <a name="11"></a>
 
 <img width="884" height="544" alt="kuva" src="https://github.com/user-attachments/assets/26e9264e-e7c6-4e99-8440-05b4326ca813" />
 
@@ -312,7 +312,7 @@ Running the command through CLI did the trick. I can now find the Add-on listed 
 Maybe there was an issue with the browser web session because I couldn't install the Add-on via web UI. Fortunately the CLI doesn't depend on web sessions. The size limit of installations through web UI is 50MB while the Add-on file is just 211KB so the size can't be the issue either.
 
 
-#### Installing Splunk Add-on for Windows for the universal forwarders (Windows VMs)
+#### Installing Splunk Add-on for Windows for the universal forwarders (Windows VMs) <a name="12"></a>
 
 <img width="1142" height="530" alt="kuva" src="https://github.com/user-attachments/assets/1f02b506-d0ff-4bd0-9777-7c20230a89e2" />
 
@@ -339,7 +339,7 @@ Here is a screenshot of the OS Logs portion of local/inputs.conf file. For the p
 Next I need to restart SplunkForwarder service for the changes to take effect.
 
 
-#### Receiving and filtering logs on the indexer (Splunk Ubuntu VM)
+#### Receiving and filtering logs on the indexer (Splunk Ubuntu VM) <a name="13"></a>
 
 <img width="1452" height="596" alt="kuva" src="https://github.com/user-attachments/assets/a5dac9e5-9278-4242-9d8e-1ac08a776a70" />
 
@@ -362,7 +362,7 @@ There! The events are now easily readable.
 
 Next up I will repeat the process of installing universal forwarder and Splunk Add-on for Windows on my Windows 10 VM.
 
-## Setting up Linux Kali VM on my Thinkpad X230 laptop
+## Setting up Linux Kali VM on my Thinkpad X230 laptop <a name="14"></a>
 
 I installed VirtualBox on my laptop but forgot to run the installation file as an administrator. This led to VirtualBox not being allowed to utilize CPU resources for virtualization, even though virtualization is enabled on BIOS. I reinstalled VirtualBox as an administrator and now I'm allowed to access CPU resources and run virtual machines. 
 
