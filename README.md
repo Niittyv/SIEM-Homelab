@@ -13,6 +13,7 @@
   - [Installing Splunk Add-on for Windows for the universal forwarders (Windows VMs)](#12)
 - [Receiving and filtering logs on the indexer (Splunk Ubuntu VM)](#13)
 - [Setting up Linux Kali VM on my Thinkpad X230 laptop](#14)
+  - [Testing ARP spoofing attack](#15)
 
 # Corporate network home laboratory (including SIEM) <a name="1"></a>
 
@@ -378,8 +379,19 @@ I downloaded Linux Kali prebuild VM from the Linux Kali official website. I adde
 
 I boot up the VM and the operating system is ready to go. No installation is required.
 
+### Testing ARP spoofing attack <a name="15"></a>
+
 <img width="1365" height="727" alt="image" src="https://github.com/user-attachments/assets/d8f13c4f-932c-459c-bc15-434b2ac53fa1" />
 
-I installed Scapy so that I can practise some ARP spoofing attacks.
+I installed Scapy so that I can practise some ARP spoofing attacks. Before connecting the attacking machine to the corporate VLAN through a LAN cable, I want to quickly try ARP spoofing on another VM on the same VirtualBox environment. I installed Win10 VM on VirtualBox and configured both Kali VM and Win10 VM to use bridged adapter as network mode. The Win10 machine is connected to the default gateway at 192.168.0.1 and Kali Linux VM at 192.168.0.146. Here is the Win10 VM point of view before running ARP spoofing:
+
+<img width="484" height="369" alt="2_3" src="https://github.com/user-attachments/assets/828b605d-3b0c-451f-9bd1-042068ae2eb4" />
+
+I received an ARP spoofing Python script from my professor and I'm supposed to run it on my Kali Linux attacking VM. The script takes two arguments. 1. Target device IP: 192.168.0.225 (Win10 VM) and 2. Gateway IP: 192.168.0.1. I start running the script on my Kali Linux terminal. Here is the Win10 VM point of view after running the ARP spoofing script:
+
+<img width="585" height="353" alt="2_2" src="https://github.com/user-attachments/assets/a55f2b14-4c7d-43a5-a6f3-df6102c4dda3" />
+
+As you can see, the gateway IP now points to the Kali Linux VM's MAC-address from Win10 VM's point of view. The attacking machine successfully impersonates the gateway machine and acts as a man in the middle (MITM). The attacking machine is now able to capture all traffic from Win10 VM to the gateway device and either forward the packets or drop them.
+
 
 
